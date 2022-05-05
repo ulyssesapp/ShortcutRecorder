@@ -9,9 +9,15 @@ let package = Package(
         .macOS(.v10_11)
     ],
     products: [
-        .library(name: "ShortcutRecorder", targets: ["ShortcutRecorder"])
+        .library(name: "ShortcutRecorder", targets: ["ShortcutRecorderTarget"])
     ],
     targets: [
+		.target(
+			name: "ShortcutRecorderTarget",
+			dependencies: [.target(name: "ShortcutRecorder",
+						  condition: .when(platforms: [.macOS]))],
+			path: "SwiftPM-PlatformExclude/ShortcutRecorderWrap"
+		),
         .target(
             name: "ShortcutRecorder",
             exclude: [
