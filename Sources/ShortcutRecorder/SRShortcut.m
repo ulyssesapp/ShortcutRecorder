@@ -421,7 +421,7 @@ NSString *const SRShortcutCharactersIgnoringModifiers = SRShortcutKeyCharactersI
 + (instancetype)new
 {
     [self doesNotRecognizeSelector:_cmd];
-    return nil;
+    return [super new];
 }
 
 - (instancetype)init
