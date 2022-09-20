@@ -3,7 +3,7 @@
 //  CC BY 4.0
 //
 
-#import <os/trace.h>
+#import <OSLog/OSLog.h>
 
 #import "ShortcutRecorder/SRCommon.h"
 
@@ -89,7 +89,7 @@
 {
     if (![aValue isKindOfClass:NSNumber.class])
     {
-        os_trace_error("#Error Invalid value for transformation");
+        os_log_error(OS_LOG_DEFAULT, "#Error Invalid value for transformation");
         return nil;
     }
 
@@ -140,7 +140,7 @@
 {
     if (![aValue isKindOfClass:NSNumber.class])
     {
-        os_trace_error("#Error Invalid value for transformation");
+        os_log_error(OS_LOG_DEFAULT, "#Error Invalid value for transformation");
         return nil;
     }
 
@@ -169,7 +169,7 @@
 {
     if (![aValue isKindOfClass:NSString.class])
     {
-        os_trace_error("#Error Invalid value for reverse transformation");
+        os_log_error(OS_LOG_DEFAULT, "#Error Invalid value for reverse transformation");
         return nil;
     }
 
@@ -197,7 +197,7 @@
 
     if (foundInvalidSubstring)
     {
-        os_trace_error("#Error Invalid value for reverse transformation");
+        os_log_error(OS_LOG_DEFAULT, "#Error Invalid value for reverse transformation");
         return nil;
     }
 

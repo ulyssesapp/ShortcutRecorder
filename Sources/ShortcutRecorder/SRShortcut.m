@@ -3,7 +3,7 @@
 //  CC BY 4.0
 //
 
-#import <os/trace.h>
+#import <OSLog/OSLog.h>
 
 #import "ShortcutRecorder/SRCommon.h"
 #import "ShortcutRecorder/SRKeyCodeTransformer.h"
@@ -48,7 +48,7 @@ NSString *const SRShortcutCharactersIgnoringModifiers = SRShortcutKeyCharactersI
     __auto_type eventType = aKeyboardEvent.type;
     if (((1 << eventType) & (NSEventMaskKeyDown | NSEventMaskKeyUp | NSEventMaskFlagsChanged)) == 0)
     {
-        os_trace_error("#Error aKeyboardEvent must be either NSEventTypeKeyUp, NSEventTypeKeyDown or NSEventTypeFlagsChanged, but got %lu", aKeyboardEvent.type);
+        os_log_error(OS_LOG_DEFAULT, "#Error aKeyboardEvent must be either NSEventTypeKeyUp, NSEventTypeKeyDown or NSEventTypeFlagsChanged, but got %lu", aKeyboardEvent.type);
         return nil;
     }
 
@@ -85,7 +85,7 @@ NSString *const SRShortcutCharactersIgnoringModifiers = SRShortcutKeyCharactersI
                 if (!NSThread.isMainThread)
                 {
                     NSParameterAssert(NO);
-                    os_trace_error("#Error #Developer AppKit failed to extract characters because it is used in a non-main thread, see SRShortcut/shortcutWithEvent:ignoringCharacters:");
+                    os_log_error(OS_LOG_DEFAULT, "#Error #Developer AppKit failed to extract characters because it is used in a non-main thread, see SRShortcut/shortcutWithEvent:ignoringCharacters:");
                 }
                 else
                     @throw;
@@ -463,7 +463,7 @@ NSString *const SRShortcutCharactersIgnoringModifiers = SRShortcutKeyCharactersI
 - (UInt32)carbonKeyCode
 {
     if (self.keyCode == SRKeyCodeNone)
-        os_trace_error("#Critical SRKeyCodeNone has no representation in Carbon");
+        os_log_error(OS_LOG_DEFAULT, "#Critical SRKeyCodeNone has no representation in Carbon");
 
     return self.keyCode;
 }
@@ -492,7 +492,7 @@ NSString *const SRShortcutCharactersIgnoringModifiers = SRShortcutKeyCharactersI
         case SRKeyCodeF18:
         case SRKeyCodeF19:
         case SRKeyCodeF20:
-            return SRCocoaToCarbonFlags(self.modifierFlags) | NSFunctionKeyMask;
+            return SRCocoaToCarbonFlags(self.modifierFlags) | NSEventModifierFlagFunction;
         default:
             return SRCocoaToCarbonFlags(self.modifierFlags);
     }
